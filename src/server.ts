@@ -76,8 +76,9 @@ app.use(notFound);
 app.use(errorHandler);
 
 // ---- Start ----
-app.listen(env.PORT, () => {
-  console.log(`\n   Cobble Quest API running on http://localhost:${env.PORT}`);
+const HOST = '0.0.0.0'; // Required for Render and cloud platforms
+app.listen(env.PORT, HOST, () => {
+  console.log(`\n   Cobble Quest API running on http://${HOST}:${env.PORT}`);
   console.log(`   Environment: ${env.NODE_ENV}`);
   console.log(`   CORS origin: ${env.FRONTEND_URL}\n`);
 });
