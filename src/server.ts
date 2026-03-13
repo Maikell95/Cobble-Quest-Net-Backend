@@ -36,10 +36,17 @@ const allowedOrigins = env.FRONTEND_URL
   ? env.FRONTEND_URL.split(',').map(o => o.trim())
   : [];
 
+function isOriginAllowed(origin: string): boolean {
+  if (allowedOrigins.includes(origin)) return true;
+  // Allow all Cloudflare Pages preview deployments (e.g. abc123.cobble-quest-net-frontend.pages.dev)
+  if (/^https:\/\/[a-z0-9]+\.cobble-quest-net-frontend\.pages\.dev$/.test(origin)) return true;
+  return false;
+}
+
 app.use(cors({
   origin: (origin, callback) => {
     // Allow requests with no origin (server-to-server, health checks)
-    if (!origin || allowedOrigins.includes(origin)) {
+    if (!origin || isOriginAllowed(origin)) {
       callback(null, true);
     } else {
       callback(new Error('Blocked by CORS'));
