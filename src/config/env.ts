@@ -24,7 +24,8 @@ const env = {
   PELICAN_CLIENT_API_KEY: process.env.PELICAN_CLIENT_API_KEY || '', // Client key (pacc_) — commands, files, resources
   PELICAN_SERVER_ID: process.env.PELICAN_SERVER_ID || '',           // Primary game server (Cobble Quest)
   PELICAN_LOBBY_SERVER_ID: process.env.PELICAN_LOBBY_SERVER_ID || '',   // Lobby server
-  PELICAN_VELOCITY_SERVER_ID: process.env.PELICAN_VELOCITY_SERVER_ID || '', // Velocity proxy — used to send commands to all backend servers
+  PELICAN_VELOCITY_SERVER_ID: process.env.PELICAN_VELOCITY_SERVER_ID || '', // Velocity proxy
+  PELICAN_GAME_SERVER_IDS: process.env.PELICAN_GAME_SERVER_IDS || '', // Comma-separated IDs of ALL game servers for command broadcast
 
   // PayPal REST API
   PAYPAL_CLIENT_ID: process.env.PAYPAL_CLIENT_ID || '',

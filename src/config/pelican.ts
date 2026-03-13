@@ -199,8 +199,16 @@ export function isPelicanConfigured(): boolean {
   return isApplicationApiConfigured() || isClientApiConfigured();
 }
 
-/** Returns the list of game server IDs configured */
+/** Returns the list of ALL game server IDs where commands should be broadcast */
 export function getConfiguredServerIds(): string[] {
+  // If PELICAN_GAME_SERVER_IDS is set, use it as the source of truth
+  if (env.PELICAN_GAME_SERVER_IDS) {
+    return env.PELICAN_GAME_SERVER_IDS
+      .split(',')
+      .map(id => id.trim())
+      .filter(id => id.length > 0);
+  }
+  // Fallback: primary + lobby (deduplicated)
   const ids: string[] = [];
   if (env.PELICAN_SERVER_ID) ids.push(env.PELICAN_SERVER_ID);
   if (env.PELICAN_LOBBY_SERVER_ID && env.PELICAN_LOBBY_SERVER_ID !== env.PELICAN_SERVER_ID) {
@@ -282,13 +290,33 @@ export async function sendServerCommand(serverId: string, command: string): Prom
 }
 
 /**
- * Send a game command to the Lobby server (Minecraft commands like say, lp, give).
- * Velocity is a proxy and doesn't support game commands — use sendVelocityCommand() for proxy commands.
- * Falls back to primary game server if Lobby is not configured.
+ * Send a game command to ALL configured game servers.
+ * This ensures ranks, items, etc. are applied everywhere the player can be.
+ * Falls back to Lobby only if no game servers are configured.
  */
 export async function sendCommand(command: string): Promise<void> {
-  const serverId = env.PELICAN_LOBBY_SERVER_ID || env.PELICAN_SERVER_ID;
-  await sendServerCommand(serverId, command);
+  const serverIds = getConfiguredServerIds();
+
+  // Fallback: just Lobby
+  if (serverIds.length === 0) {
+    const fallback = env.PELICAN_LOBBY_SERVER_ID || env.PELICAN_SERVER_ID;
+    if (!fallback) throw new Error('No game servers configured');
+    await sendServerCommand(fallback, command);
+    return;
+  }
+
+  // Broadcast to all game servers
+  const results = await Promise.allSettled(
+    serverIds.map(id => sendServerCommand(id, command))
+  );
+
+  const failures = results.filter(r => r.status === 'rejected');
+  if (failures.length === results.length) {
+    throw new Error(`Command failed on all ${failures.length} servers`);
+  }
+  if (failures.length > 0) {
+    console.warn(`Command "${command}" failed on ${failures.length}/${results.length} servers`);
+  }
 }
 
 /**
