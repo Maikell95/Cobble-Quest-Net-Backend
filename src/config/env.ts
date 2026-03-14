@@ -10,7 +10,7 @@ if (isProduction && !process.env.JWT_SECRET) {
 }
 
 const env = {
-  PORT: parseInt(process.env.PORT || '4000', 10),
+  PORT: parseInt(process.env.PORT || process.env.SERVER_PORT || '4000', 10),
   NODE_ENV,
   IS_PRODUCTION: isProduction,
   FRONTEND_URL: process.env.FRONTEND_URL || 'http://localhost:5173',
