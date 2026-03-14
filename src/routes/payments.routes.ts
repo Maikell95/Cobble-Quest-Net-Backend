@@ -55,11 +55,11 @@ interface RankDefinition {
 }
 
 const RANKS: Record<string, RankDefinition> = {
-  super:  { name: 'Super',  monthlyPrice: 4.99,  permanentPrice: 14.99, commands: ['lp user {username} parent add super'] },
-  ultra:  { name: 'Ultra',  monthlyPrice: 9.99,  permanentPrice: 29.99, commands: ['lp user {username} parent add ultra'] },
-  honor:  { name: 'Honor',  monthlyPrice: 19.99, permanentPrice: 44.99, commands: ['lp user {username} parent add honor'] },
-  luxury: { name: 'Luxury', monthlyPrice: 29.99, permanentPrice: 59.99, commands: ['lp user {username} parent add luxury'] },
-  master: { name: 'Master', monthlyPrice: 34.99, permanentPrice: 74.99, commands: ['lp user {username} parent add master'] },
+  super:  { name: 'Super',  monthlyPrice: 4.99,  permanentPrice: 14.99, commands: ['lp user {username} parent set super'] },
+  ultra:  { name: 'Ultra',  monthlyPrice: 9.99,  permanentPrice: 29.99, commands: ['lp user {username} parent set ultra'] },
+  honor:  { name: 'Honor',  monthlyPrice: 19.99, permanentPrice: 44.99, commands: ['lp user {username} parent set honor'] },
+  luxury: { name: 'Luxury', monthlyPrice: 29.99, permanentPrice: 59.99, commands: ['lp user {username} parent set luxury'] },
+  master: { name: 'Master', monthlyPrice: 34.99, permanentPrice: 74.99, commands: ['lp user {username} parent set master'] },
 };
 
 /** Match a payment item to a known rank by name + price. Returns rank commands if matched. */
