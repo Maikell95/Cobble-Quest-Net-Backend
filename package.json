@@ -24,6 +24,11 @@
   "private": true,
   "dependencies": {
     "@supabase/supabase-js": "^2.99.0",
+    "@types/bcrypt": "^6.0.0",
+    "@types/cors": "^2.8.19",
+    "@types/express": "^5.0.6",
+    "@types/jsonwebtoken": "^9.0.10",
+    "@types/node": "^25.4.0",
     "bcrypt": "^6.0.0",
     "cors": "^2.8.6",
     "dotenv": "^17.3.1",
@@ -33,12 +38,5 @@
     "jsonwebtoken": "^9.0.3",
     "tsx": "^4.21.0",
     "typescript": "^5.9.3"
-  },
-  "devDependencies": {
-    "@types/bcrypt": "^6.0.0",
-    "@types/cors": "^2.8.19",
-    "@types/express": "^5.0.6",
-    "@types/jsonwebtoken": "^9.0.10",
-    "@types/node": "^25.4.0"
   }
 }
