@@ -36,6 +36,7 @@
     "express-rate-limit": "^8.3.1",
     "helmet": "^8.1.0",
     "jsonwebtoken": "^9.0.3",
+    "potrace": "^2.1.8",
     "tsx": "^4.21.0",
     "typescript": "^5.9.3"
   }

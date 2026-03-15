@@ -1,0 +1,2 @@
+WHITELIST VELOCITY: 
+WHITELIST LOBBY: alfonso, kirarcangel, WR_Eiden, DragoTempest
