@@ -9,6 +9,7 @@
   },
   "scripts": {
     "dev": "tsx watch src/server.ts",
+    "postinstall": "tsc",
     "build": "tsc",
     "start": "node dist/server.js",
     "start:ts": "tsx src/server.ts",
